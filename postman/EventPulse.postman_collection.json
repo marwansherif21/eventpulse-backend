@@ -1,0 +1,96 @@
+{
+  "info": {
+    "name": "EventPulse API",
+    "_postman_id": "eventpulse-api-v1",
+    "description": "EventPulse authentication, events, registrations, and real-time announcement endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "token", "value": "" },
+    { "key": "eventId", "value": "507f1f77bcf86cd799439011" },
+    { "key": "registrationId", "value": "507f1f77bcf86cd799439011" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Sara Ahmed\",\n  \"email\": \"sara@example.com\",\n  \"password\": \"secret123\"\n}" }, "url": "{{baseUrl}}/api/auth/register" },
+          "response": [{ "name": "201 Created", "status": "Created", "code": 201, "body": "{\n  \"status\": \"success\",\n  \"token\": \"<jwt>\",\n  \"data\": { \"name\": \"Sara Ahmed\", \"role\": \"attendee\" }\n}" }]
+        },
+        {
+          "name": "Login",
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"sara@example.com\",\n  \"password\": \"secret123\"\n}" }, "url": "{{baseUrl}}/api/auth/login" },
+          "response": [{ "name": "200 OK", "status": "OK", "code": 200, "body": "{\n  \"status\": \"success\",\n  \"token\": \"<jwt>\"\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "List Events",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/events?page=1&limit=10&sortBy=date&order=asc" },
+          "response": [{ "name": "200 OK", "status": "OK", "code": 200, "body": "{\n  \"status\": \"success\",\n  \"total\": 1,\n  \"page\": 1,\n  \"limit\": 10,\n  \"totalPages\": 1,\n  \"data\": []\n}" }]
+        },
+        {
+          "name": "Get Event",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/events/{{eventId}}" },
+          "response": [{ "name": "200 OK", "status": "OK", "code": 200, "body": "{\n  \"status\": \"success\",\n  \"data\": { \"_id\": \"<eventId>\", \"title\": \"Future of Web Development\" }\n}" }]
+        },
+        {
+          "name": "Create Event",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"Future of Web Development\",\n  \"description\": \"A practical conference.\",\n  \"category\": \"507f1f77bcf86cd799439011\",\n  \"date\": \"2026-09-15T09:00:00Z\",\n  \"city\": \"New York\",\n  \"venue\": \"Hudson Hall\",\n  \"capacity\": 300\n}" }, "url": "{{baseUrl}}/api/events" },
+          "response": [{ "name": "201 Created", "status": "Created", "code": 201, "body": "{\n  \"status\": \"success\",\n  \"data\": { \"title\": \"Future of Web Development\" }\n}" }]
+        },
+        {
+          "name": "Update Event",
+          "request": { "method": "PATCH", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"venue\": \"Main Hall\"\n}" }, "url": "{{baseUrl}}/api/events/{{eventId}}" },
+          "response": [{ "name": "200 OK", "status": "OK", "code": 200, "body": "{\n  \"status\": \"success\",\n  \"data\": { \"venue\": \"Main Hall\" }\n}" }]
+        },
+        {
+          "name": "Delete Event",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/events/{{eventId}}" },
+          "response": [{ "name": "204 No Content", "status": "No Content", "code": 204, "body": "" }]
+        }
+      ]
+    },
+    {
+      "name": "Registrations",
+      "item": [
+        {
+          "name": "Register for Event",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"eventId\": \"{{eventId}}\"\n}" }, "url": "{{baseUrl}}/api/registrations" },
+          "response": [{ "name": "201 Created", "status": "Created", "code": 201, "body": "{\n  \"status\": \"success\",\n  \"data\": { \"event\": \"<eventId>\" }\n}" }]
+        },
+        {
+          "name": "My Registrations",
+          "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/registrations/my" },
+          "response": [{ "name": "200 OK", "status": "OK", "code": 200, "body": "{\n  \"status\": \"success\",\n  \"data\": []\n}" }]
+        },
+        {
+          "name": "Cancel Registration",
+          "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/registrations/{{registrationId}}" },
+          "response": [{ "name": "200 OK", "status": "OK", "code": 200, "body": "{\n  \"status\": \"success\",\n  \"message\": \"Registration cancelled successfully\"\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Announcements",
+      "item": [
+        {
+          "name": "Announcement History",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/announcements/{{eventId}}" },
+          "response": [{ "name": "200 OK", "status": "OK", "code": 200, "body": "{\n  \"status\": \"success\",\n  \"data\": []\n}" }]
+        },
+        {
+          "name": "Create Announcement",
+          "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"eventId\": \"{{eventId}}\",\n  \"text\": \"The keynote begins in 15 minutes.\"\n}" }, "url": "{{baseUrl}}/api/announcements" },
+          "response": [{ "name": "201 Created", "status": "Created", "code": 201, "body": "{\n  \"status\": \"success\",\n  \"data\": { \"text\": \"The keynote begins in 15 minutes.\" }\n}" }]
+        }
+      ]
+    }
+  ]
+}
