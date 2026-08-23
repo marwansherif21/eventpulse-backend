@@ -92,7 +92,7 @@ https://<your-vercel-domain>/health
 https://<your-vercel-domain>/api-docs
 ```
 
-Live deployment URL: **Set this after the Vercel deployment is created.**
+Live deployment URL: [https://project2-2026.vercel.app](https://project2-2026.vercel.app)
 
 ### Socket.io Hosting Note
 
