@@ -20,8 +20,6 @@ const seed = async () => {
 
     const admin = await User.create({
         name: 'EventPulse Admin',
-        email: 'admin@eventpulse.com',
-        password: await bcrypt.hash('Admin123!', 12),
         role: 'admin'
     });
 
