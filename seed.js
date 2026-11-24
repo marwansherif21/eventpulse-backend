@@ -19,8 +19,14 @@ const seed = async () => {
     await User.deleteMany({});
 
     const admin = await User.create({
+        ```
+    const admin = await User.create({
         name: 'EventPulse Admin',
+        email: process.env.SEED_ADMIN_EMAIL,
+        password: await bcrypt.hash(process.env.SEED_ADMIN_PASSWORD, 12),
         role: 'admin'
+    });
+```
     });
 
     const categories = await Category.insertMany([
