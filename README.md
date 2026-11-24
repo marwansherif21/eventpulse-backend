@@ -42,7 +42,7 @@ npm run dev
 
 The API runs at `http://localhost:3000`. Production-style startup uses `npm start`.
 
-The development seed creates an admin account: `admin@eventpulse.com` with password `Admin123!`. Change or remove these development credentials before production use.
+The development seed creates a sample admin account. Check seed.js for the credentials and change them before any production use.
 
 ## Documentation
 
