@@ -42,7 +42,9 @@ npm run dev
 
 The API runs at `http://localhost:3000`. Production-style startup uses `npm start`.
 
-The development seed creates a sample admin account. Check seed.js for the credentials and change them before any production use.
+```
+The development seed creates a sample admin account. Set `SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD` in your `.env` before running `npm run seed`, and use a strong password.
+``````
 
 ## Documentation
 
